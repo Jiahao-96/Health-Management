@@ -1,0 +1,45 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: health_oms_backend
+
+  #指定启动环境
+  profiles:
+    active: local
+
+  # datasource
+  datasource:
+    driver-class-name: ${health.datasource.driver-class-name}
+    url: ${health.datasource.url}
+    username: ${health.datasource.username}
+    password: ${health.datasource.password}
+
+  #redis
+  redis:
+    host: ${health.redis.host}
+    port: ${health.redis.port}
+    password: ${health.redis.password}
+    database: ${health.redis.database}
+
+#日志
+logging:
+  level:
+    #生产环境一般使用info级别，开发和测试环境使用debug级别
+    root: info
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml # mapper映射文件路径
+  type-aliases-package: com.itheima.health.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 阿里云oss
+health:
+  alioss:
+    url-prefix: ${health.alioss.url-prefix}
+    endpoint: ${health.alioss.endpoint}
+    access-key-id: ${health.alioss.access-key-id}
+    access-key-secret: ${health.alioss.access-key-secret}
+    bucket-name: ${health.alioss.bucket-name}

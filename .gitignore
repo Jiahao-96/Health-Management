@@ -1,0 +1,38 @@
+# Compiled class file
+*.cs
+las
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Intellij
+*.iml
+.idea/
+
+# Maven
+target/
+
+# Gradle
+build
+.gradle
+
+# Log file
+*.log
+log/
+
+# out
+**/out/
+
+# Mac
+.DS_Store
+
+# others
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+temp/
+
+application-*.yml
