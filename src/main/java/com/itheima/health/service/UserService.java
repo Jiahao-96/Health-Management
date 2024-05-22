@@ -1,6 +1,6 @@
 package com.itheima.health.service;
 
-import com.itheima.health.pojo.User;
+import com.itheima.health.pojo.entity.User;
 
 /**
  * @author zhangmeng

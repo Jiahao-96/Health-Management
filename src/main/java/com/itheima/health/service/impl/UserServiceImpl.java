@@ -1,7 +1,7 @@
 package com.itheima.health.service.impl;
 
 import com.itheima.health.dao.UserDao;
-import com.itheima.health.pojo.User;
+import com.itheima.health.pojo.entity.User;
 import com.itheima.health.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

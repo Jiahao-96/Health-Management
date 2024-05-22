@@ -1,4 +1,4 @@
-package com.itheima.health.pojo;
+package com.itheima.health.pojo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

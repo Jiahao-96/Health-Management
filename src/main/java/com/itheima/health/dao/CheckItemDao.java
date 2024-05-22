@@ -1,7 +1,7 @@
 package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
-import com.itheima.health.pojo.CheckItem;
+import com.itheima.health.pojo.entity.CheckItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

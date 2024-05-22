@@ -1,6 +1,6 @@
 package com.itheima.health.dao;
 
-import com.itheima.health.pojo.User;
+import com.itheima.health.pojo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

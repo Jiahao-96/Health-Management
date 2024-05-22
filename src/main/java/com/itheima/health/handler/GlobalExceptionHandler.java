@@ -1,4 +1,4 @@
-package com.itheima.health.controller;
+package com.itheima.health.handler;
 
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.entity.Result;
@@ -21,7 +21,7 @@ import javax.servlet.ServletException;
  */
 @RestControllerAdvice(basePackages = {"com.itheima.health.controller"})
 @Slf4j
-public class MyExceptionHandler {
+public class GlobalExceptionHandler {
     /**
      * 服务端异常，直接提示操作失败
      */
