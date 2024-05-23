@@ -1,7 +1,7 @@
 package com.itheima.health.service;
 
-import com.itheima.health.entity.PageResult;
-import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.pojo.result.PageResult;
+import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.CheckItem;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface CheckItemService {
      * @param queryPageBean
      * @return
      */
-    PageResult pageQuery(QueryPageBean queryPageBean);
+    PageResult pageQuery(QueryPageBeanDTO queryPageBean);
 
     /**
      * 根据id删除

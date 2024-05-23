@@ -3,8 +3,8 @@ package com.itheima.health.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.CheckItemDao;
-import com.itheima.health.entity.PageResult;
-import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.pojo.result.PageResult;
+import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.exception.BusinessRuntimeException;
 import com.itheima.health.pojo.entity.CheckItem;
 import com.itheima.health.service.CheckItemService;
@@ -34,7 +34,7 @@ public class CheckItemServiceImpl implements CheckItemService {
     }
 
     @Override
-    public PageResult pageQuery(QueryPageBean queryPageBean) {
+    public PageResult pageQuery(QueryPageBeanDTO queryPageBean) {
         log.info("[检查项-分页查询]data：{}", queryPageBean);
         //使用分页插件
         PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());

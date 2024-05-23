@@ -1,7 +1,7 @@
 package com.itheima.health.handler;
 
 import com.itheima.health.common.MessageConst;
-import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.result.Result;
 import com.itheima.health.exception.BusinessRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

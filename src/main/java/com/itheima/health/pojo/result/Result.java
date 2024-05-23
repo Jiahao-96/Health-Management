@@ -1,4 +1,4 @@
-package com.itheima.health.entity;
+package com.itheima.health.pojo.result;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.itheima.health.entity;
+package com.itheima.health.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QueryPageBean implements Serializable {
+public class QueryPageBeanDTO implements Serializable {
     private Integer currentPage;
     private Integer pageSize;
     private String queryString;

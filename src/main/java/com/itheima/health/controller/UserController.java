@@ -1,7 +1,7 @@
 package com.itheima.health.controller;
 
 import com.itheima.health.common.MessageConst;
-import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.result.Result;
 import com.itheima.health.pojo.entity.User;
 import com.itheima.health.service.UserService;
 import com.itheima.health.pojo.dto.LoginDTO;

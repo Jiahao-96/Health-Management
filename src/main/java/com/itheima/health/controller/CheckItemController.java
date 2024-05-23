@@ -1,9 +1,9 @@
 package com.itheima.health.controller;
 
 import com.itheima.health.common.MessageConst;
-import com.itheima.health.entity.PageResult;
-import com.itheima.health.entity.QueryPageBean;
-import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.result.PageResult;
+import com.itheima.health.pojo.dto.QueryPageBeanDTO;
+import com.itheima.health.pojo.result.Result;
 import com.itheima.health.pojo.entity.CheckItem;
 import com.itheima.health.service.CheckItemService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class CheckItemController {
      * @return
      */
     @GetMapping("findPage")
-    public Result findPage(QueryPageBean queryPageBean) {
+    public Result findPage(QueryPageBeanDTO queryPageBean) {
         log.info("[检查项-分页查询]data:{}", queryPageBean);
         //rpc查询数据
         PageResult pageResult = checkItemService.pageQuery(queryPageBean);
