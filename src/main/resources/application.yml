@@ -3,12 +3,24 @@ server:
 spring:
   application:
     name: health_oms_backend
+
+  #指定启动环境
+  profiles:
+    active: local
+
   # datasource
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/itcast_health_personal_combat?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
-    username: root
-    password: 1234
+    driver-class-name: ${health.datasource.driver-class-name}
+    url: ${health.datasource.url}
+    username: ${health.datasource.username}
+    password: ${health.datasource.password}
+
+  #redis
+  redis:
+    host: ${health.redis.host}
+    port: ${health.redis.port}
+    password: ${health.redis.password}
+    database: ${health.redis.database}
 
 #日志
 logging:
@@ -29,3 +41,13 @@ mybatis:
 pagehelper:
   # 指定使用的数据库类型
   helperDialect: mysql
+
+
+# 阿里云oss
+health:
+  alioss:
+    url-prefix: ${health.alioss.url-prefix}
+    endpoint: ${health.alioss.endpoint}
+    access-key-id: ${health.alioss.access-key-id}
+    access-key-secret: ${health.alioss.access-key-secret}
+    bucket-name: ${health.alioss.bucket-name}

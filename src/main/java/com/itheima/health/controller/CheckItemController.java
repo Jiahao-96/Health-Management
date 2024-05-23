@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author zhangmeng
- * @description 检查项Controller
- * @date 2019/9/16
- **/
 @RestController
 @RequestMapping("/checkitem")
 @Slf4j
