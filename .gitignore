@@ -35,4 +35,4 @@ log/
 *.tar.gz
 temp/
 
-application-*.yml
+application-local.yml
