@@ -48,6 +48,11 @@
         select count(1) from t_setmeal_checkgroup
         where checkgroup_id = #{checkGroupId};
     </select>
+    <select id="selectCheckItemsByCheckGroupId" resultType="com.itheima.health.pojo.entity.CheckItem"
+            parameterType="java.lang.Integer">
+        select * from t_checkgroup_checkitem f1 , t_checkitem f2 where f1.checkitem_id = f2.id and f1.checkgroup_id = #{id}
+    </select>
+
     <delete id="deleteById" parameterType="integer">
         delete from t_checkgroup
         where id = #{id}

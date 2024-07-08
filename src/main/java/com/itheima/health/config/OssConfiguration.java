@@ -1,6 +1,6 @@
 package com.itheima.health.config;
 
-import com.itheima.health.utils.AliOssProperties;
+import com.itheima.health.properties.AliOssProperties;
 import com.itheima.health.utils.AliOssUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

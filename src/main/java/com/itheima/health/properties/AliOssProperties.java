@@ -1,4 +1,4 @@
-package com.itheima.health.utils;
+package com.itheima.health.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

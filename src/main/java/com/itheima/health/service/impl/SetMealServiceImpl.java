@@ -7,7 +7,7 @@ import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.pojo.result.PageResult;
 import com.itheima.health.service.SetMealService;
-import com.itheima.health.utils.AliOssProperties;
+import com.itheima.health.properties.AliOssProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +46,9 @@ public class SetMealServiceImpl implements SetMealService {
         PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
         //DAO查询数据
         Page<Setmeal> page = setMealDao.selectByCondition(queryPageBean.getQueryString());
+        for (Setmeal setmeal : page) {
+            setmeal.setImg(aliOssProperties.getUrlPrefix()+setmeal.getImg());
+        }
         //封装返回值
         return new PageResult(page.getTotal(),page.getResult());
     }
@@ -53,10 +56,7 @@ public class SetMealServiceImpl implements SetMealService {
     @Override
     public List<Setmeal> getSetmeal() {
         List<Setmeal> setmeals = setMealDao.selectAll();
-        setmeals.forEach(setmeal -> {
-            // 构造图片完整路径
-            setmeal.setImg(aliOssProperties.getUrlPrefix()+setmeal.getImg());
-        });
+
         return setmeals;
     }
 

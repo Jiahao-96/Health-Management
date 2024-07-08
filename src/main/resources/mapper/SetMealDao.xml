@@ -49,4 +49,13 @@
           and t2.checkgroup_id = t3.id
           and t1.id = #{id}
     </select>
+
+    <select id="findById" resultType="com.itheima.health.pojo.entity.Setmeal" parameterType="java.lang.String">
+        select * from t_setmeal where id = #{id}
+    </select>
+
+    <select id="selectCheckGroupBySetmealId" resultType="com.itheima.health.pojo.entity.CheckGroup"
+            parameterType="java.lang.String">
+        select f2.* from t_setmeal_checkgroup f1 ,t_checkgroup f2 where f1.checkgroup_id = f2.id and f1.setmeal_id = #{id}
+    </select>
 </mapper>

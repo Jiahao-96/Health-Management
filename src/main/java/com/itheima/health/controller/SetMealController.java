@@ -36,9 +36,9 @@ public class SetMealController {
             // String objectName = UUID.randomUUID() + suffix;
             String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString().replace("-", "") + "_" + originalFilename;
 
-            aliOssUtil.upload(imgFile.getBytes(), fileName);
+            aliOssUtil.upload(imgFile.getBytes(), fileName);//其实这个时候已经返回了正确的url
             // 2.返回图片路径结果
-            String url = aliOssUtil.getUrlPrefix() + fileName;
+            String url = aliOssUtil.getUrlPrefix() + fileName;//不知道为啥要再平均获取，可能后面有用吧
             log.info("url: {}", url);
             return new Result(true, MessageConst.PIC_UPLOAD_SUCCESS, url);
         } catch (IOException e) {

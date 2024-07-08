@@ -51,3 +51,11 @@ health:
     access-key-id: ${health.alioss.access-key-id}
     access-key-secret: ${health.alioss.access-key-secret}
     bucket-name: ${health.alioss.bucket-name}
+
+  aliyun:
+    sms:
+      endpoint: ${health.aliyun.sms.endpoint}
+      accessKeyId: ${health.aliyun.sms.accessKeyId}
+      accessKeySecret: ${health.aliyun.sms.accessKeySecret}
+      signName: ${health.aliyun.sms.signName}
+      templateCode: ${health.aliyun.sms.templateCode}

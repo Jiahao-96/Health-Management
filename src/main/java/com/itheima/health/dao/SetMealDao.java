@@ -1,6 +1,7 @@
 package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
+import com.itheima.health.pojo.entity.CheckGroup;
 import com.itheima.health.pojo.entity.Setmeal;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -42,4 +43,9 @@ public interface SetMealDao {
      * @return
      */
     Setmeal selectById(@Param("id") Integer id);
+
+    Setmeal findById(String id);
+
+    List<CheckGroup> selectCheckGroupBySetmealId(String id);
+
 }

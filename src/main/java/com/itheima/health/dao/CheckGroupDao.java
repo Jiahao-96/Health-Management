@@ -2,6 +2,7 @@ package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
 import com.itheima.health.pojo.entity.CheckGroup;
+import com.itheima.health.pojo.entity.CheckItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -68,4 +69,5 @@ public interface CheckGroupDao {
      */
     void deleteById(@Param("id") Integer id);
 
+    List<CheckItem> selectCheckItemsByCheckGroupId(Integer id);
 }
