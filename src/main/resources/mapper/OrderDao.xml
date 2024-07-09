@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.health.dao.OrderDao">
+    <insert id="insertOrder" parameterType="com.itheima.health.pojo.entity.Order" useGeneratedKeys="true" keyProperty="id">
+        insert into t_order (id, member_id, orderDate, orderType, orderStatus, setmeal_id) VALUES (#{id},#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+    </insert>
+    <select id="searchOrderByMemberIdAndOrderDate" resultType="java.lang.Integer">
+        select count(*) from t_order
+        <where>
+            <if test="orderDate != null">
+                orderDate = #{orderDate}
+            </if>
+            <if test="id != null">
+                and member_id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="searchOrderSucessBySetmealId" resultType="com.itheima.health.pojo.entity.OrderInfo"
+            parameterType="java.lang.Integer">
+        select f1.orderType as orderType, f1.orderDate orderDate, f2.name as member, f3.name as setmeal
+        from t_order f1,
+             t_member f2,
+             t_setmeal f3
+        where f1.member_id = f2.id
+          and f1.setmeal_id = f3.id
+          and f1.id = #{orderId}
+
+    </select>
+</mapper>

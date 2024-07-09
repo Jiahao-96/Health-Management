@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.health.dao.MemberDao">
+    <insert id="insertMember" parameterType="com.itheima.health.pojo.entity.Member" keyProperty="id" useGeneratedKeys="true">
+        insert into t_member(fileNumber, name, sex, idCard, phoneNumber, regTime, password, email, birthday, remark)values(#{fileNumber},#{name},#{sex},#{idCard},#{phoneNumber},#{regTime},#{password},#{email},#{birthday},#{remark})
+    </insert>
+    <select id="searchMemberByPhoneNumber" resultType="com.itheima.health.pojo.entity.Member"
+            parameterType="java.lang.String">
+        select * from t_member where phoneNumber = #{phoneNumber}
+    </select>
+</mapper>

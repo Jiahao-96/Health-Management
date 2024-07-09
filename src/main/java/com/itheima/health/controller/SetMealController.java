@@ -29,6 +29,11 @@ public class SetMealController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     * 图片上传
+     * @param imgFile
+     * @return
+     */
     @PostMapping("/upload")
     public Result upload(MultipartFile imgFile) {
         // 获取原始文件名
@@ -44,7 +49,6 @@ public class SetMealController {
             redisTemplate.opsForSet().add(RedisConst.ALIYUN_PIC,fileName);
             // 2.返回图片路径结果
             String url = aliOssUtil.getUrlPrefix() + fileName;//不知道为啥要再拼接获取，可能后面有用吧
-
             log.info("url: {}", url);
             return new Result(true, MessageConst.PIC_UPLOAD_SUCCESS, url);
         } catch (IOException e) {
@@ -89,4 +93,9 @@ public class SetMealController {
         //构造返回结果并返回
         return new Result(true, MessageConst.QUERY_SETMEAL_SUCCESS, pageResult);
     }
+
+
+//    编辑操作，删除时，删除垃圾图片该怎么办，
+//    通过传来的对象或id获取图片的名称，调用redis中set集合的删除方法，把该图片从mysql_redis中删掉。
+//    之后定时任务会自动删除阿里云中图片
 }

@@ -26,7 +26,7 @@ public class DeleteFilesTask {
     @Autowired
     private AliOssUtil aliOssUtil;
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0 5 * * ?")
     public void processDeleteFiles() {
         log.info("调用了定时方法捏");
 

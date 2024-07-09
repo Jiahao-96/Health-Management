@@ -80,7 +80,6 @@ public class AliOssUtil {
     public void deleteFile(String fileName) {
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
         try {
             // 删除文件。
             ossClient.deleteObject(bucketName, fileName);

@@ -4,6 +4,7 @@ import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.dto.SubmitDTO;
 import com.itheima.health.pojo.dto.ValidateCodeDTO;
 import com.itheima.health.pojo.entity.Order;
+import com.itheima.health.pojo.entity.OrderInfo;
 import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.MobileService;
@@ -66,14 +67,25 @@ public class MobileController {
     }
 
     /**
-     * 提交预约 TODO
+     * 提交预约
      * @param submitDTO
      * @return
      */
     @PostMapping("/order/submit")
-    public Result submit(SubmitDTO submitDTO){
+    public Result submit(@RequestBody SubmitDTO submitDTO){
         Order order = mobileService.submit(submitDTO);
         return new Result(true, MessageConst.ORDER_SUCCESS,order);
+    }
+
+    /**
+     * 订单数据展示
+     * @param
+     * @return
+     */
+    @GetMapping("/order/findById")
+    public Result findById(Integer id){
+        OrderInfo orderInfo = mobileService.searchOrderSucessBySetmealId(id);
+        return new Result(true, MessageConst.QUERY_ORDER_SUCCESS,orderInfo);
     }
 
 

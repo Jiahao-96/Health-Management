@@ -62,6 +62,7 @@ public class AliyunSmsTemplate {
             
             SendSmsResponse sendSmsResponse = createClient().sendSms(sendSmsRequest);
             String responseCode = sendSmsResponse.getBody().getCode();
+            log.info(smsCode.toString());
             if ("OK".equals(responseCode)) {
                 return String.valueOf(code);
             } else {

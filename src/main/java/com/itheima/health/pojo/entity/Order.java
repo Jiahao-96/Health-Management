@@ -1,6 +1,7 @@
 package com.itheima.health.pojo.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order implements Serializable{
     public static final String ORDERTYPE_TELEPHONE = "电话预约";
     public static final String ORDERTYPE_WEIXIN = "微信预约";
