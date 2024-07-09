@@ -48,4 +48,6 @@ public interface SetMealDao {
 
     List<CheckGroup> selectCheckGroupBySetmealId(String id);
 
+    List<String> selectAllimg();
+
 }

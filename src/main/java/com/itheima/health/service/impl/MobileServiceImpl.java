@@ -1,8 +1,6 @@
 package com.itheima.health.service.impl;
-
-import ch.qos.logback.core.joran.action.AppenderRefAction;
 import com.itheima.health.common.MessageConst;
-import com.itheima.health.common.ValidateCodeTypeConst;
+import com.itheima.health.common.RedisConst;
 import com.itheima.health.dao.CheckGroupDao;
 import com.itheima.health.dao.SetMealDao;
 import com.itheima.health.exception.BusinessRuntimeException;
@@ -15,12 +13,9 @@ import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.properties.AliOssProperties;
 import com.itheima.health.service.MobileService;
 import com.itheima.health.utils.AliyunSmsTemplate;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -33,10 +28,8 @@ public class MobileServiceImpl implements MobileService {
     private RedisTemplate redisTemplate;
     @Autowired
     private SetMealDao setMealDao;
-
     @Autowired
     private CheckGroupDao checkGroupDao;
-
     @Autowired
     private AliOssProperties aliOssProperties;
 
@@ -49,20 +42,20 @@ public class MobileServiceImpl implements MobileService {
      */
     @Override
     public void send(String type, String telephone) {
-        if(type.equals(ValidateCodeTypeConst.MOBILE_SIGNIN)){
+        if(type.equals(RedisConst.MOBILE_SIGNIN)){
             //登录验证码
             String code = aliyunSmsTemplate.sendSms(telephone);
             if(code == null){
                 throw new BusinessRuntimeException(MessageConst.SEND_VALIDATECODE_FAIL);
             }
-            redisTemplate.opsForValue().set(ValidateCodeTypeConst.MOBILE_SIGNIN+telephone,code);
-        }else if(type.equals(ValidateCodeTypeConst.ORDER)){
+            redisTemplate.opsForValue().set(RedisConst.MOBILE_SIGNIN+telephone,code);
+        }else if(type.equals(RedisConst.ORDER)){
             //预约验证码
             String code = aliyunSmsTemplate.sendSms(telephone);
             if(code == null){
                 throw new BusinessRuntimeException(MessageConst.SEND_VALIDATECODE_FAIL);
             }
-            redisTemplate.opsForValue().set(ValidateCodeTypeConst.ORDER+telephone,code);
+            redisTemplate.opsForValue().set(RedisConst.ORDER+telephone,code);
         }
     }
 
@@ -72,7 +65,7 @@ public class MobileServiceImpl implements MobileService {
      */
     @Override
     public void smsLogin(ValidateCodeDTO validateCodeDTO) {
-        String redisValidateCode = (String) redisTemplate.opsForValue().get(ValidateCodeTypeConst.MOBILE_SIGNIN + validateCodeDTO.getTelephone());
+        String redisValidateCode = (String) redisTemplate.opsForValue().get(RedisConst.MOBILE_SIGNIN + validateCodeDTO.getTelephone());
         if (redisValidateCode == null || !redisValidateCode.equals(validateCodeDTO.getValidateCode())){
             throw new BusinessRuntimeException(MessageConst.VALIDATECODE_ERROR);
         }
@@ -117,7 +110,7 @@ public class MobileServiceImpl implements MobileService {
      */
     @Override
     public Order submit(SubmitDTO submitDTO) {
-        String redisValidateCode = (String) redisTemplate.opsForValue().get(ValidateCodeTypeConst.ORDER + submitDTO.getTelephone());
+        String redisValidateCode = (String) redisTemplate.opsForValue().get(RedisConst.ORDER + submitDTO.getTelephone());
         if (redisValidateCode == null || !redisValidateCode.equals(submitDTO.getValidateCode())){
             throw new BusinessRuntimeException(MessageConst.VALIDATECODE_ERROR);
         }
