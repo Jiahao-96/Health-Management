@@ -2,6 +2,9 @@ package com.itheima.health.service;
 
 import com.itheima.health.pojo.entity.User;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author zhangmeng
  * @description 用户服务接口
@@ -15,4 +18,7 @@ public interface UserService {
      * @return
      */
     User findByUsername(String username);
+
+    List<String> searchMenu(User user);
+
 }

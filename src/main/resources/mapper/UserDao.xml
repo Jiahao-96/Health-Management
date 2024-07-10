@@ -4,4 +4,14 @@
     <select id="selectByUsername" resultType="com.itheima.health.pojo.entity.User">
         select  * from t_user where username = #{username}
     </select>
+    <select id="searchMenu" resultType="java.lang.String">
+        select f3.linkUrl
+        from t_user_role f1,
+             t_role_menu f2,
+             t_menu f3
+        where f1.role_id = f2.role_id
+          and f2.menu_id = f3.id
+          and user_id = #{id}
+          and linkUrl is not null
+    </select>
 </mapper>

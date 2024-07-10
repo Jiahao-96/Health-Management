@@ -4,6 +4,9 @@ import com.itheima.health.pojo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author ：zhang
  * @date ：Created in 2019/11/20
@@ -19,4 +22,7 @@ public interface UserDao {
      * @return
      */
     User selectByUsername(@Param("username") String username);
+
+    List<String> searchMenu(User user);
+
 }

@@ -19,7 +19,6 @@ public class CheckGroupController {
 
     @Autowired
     private CheckGroupService checkGroupService;
-
     /**
      * 添加
      *
