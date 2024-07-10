@@ -47,7 +47,6 @@ public class CheckGroupController {
         PageResult pageResult = checkGroupService.pageQuery(queryPageBean);
         //构造返回对象
         return new Result(true,MessageConst.QUERY_CHECKGROUP_SUCCESS,pageResult);
-
     }
 
     /**

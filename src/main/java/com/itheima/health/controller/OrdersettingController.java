@@ -35,18 +35,22 @@ public class OrdersettingController {
     }
 
     /**
-     *
+     *获取一个月的预约情况
      * @param year
      * @param month
      * @return
      */
-
     @GetMapping("/getOrderSettingByMonth")
     public Result getOrderSettingByMonth(String year ,String month){
         List<OrderSetting> orderSettings = ordersettingService.getOrderSettingByMonth(year,month);
         return new Result(true,MessageConst.GET_ORDERSETTING_SUCCESS,orderSettings);
     }
 
+    /**
+     * 设置预约信息
+     * @param orderSetting
+     * @return
+     */
     @PostMapping("/editNumberByDate")
     public Result editNumberByDate (@RequestBody OrderSetting orderSetting){
         ordersettingService.editNumberByDate(orderSetting);
