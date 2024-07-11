@@ -123,4 +123,15 @@ public class CheckGroupController {
         }
 
     }
+    /**
+     * 编辑套餐信息时的管理检查组显示
+     * @param id
+     * @return
+     */
+    @GetMapping("/findCheckGroupIdsBySetmealId")
+    public Result findCheckGroupIdsBySeymealId(@RequestParam Integer id){
+        List<Integer> checkGroupIds = checkGroupService.findCheckGroupIdsBySeymealId(id);
+        return new Result(true,MessageConst.ACTION_SUCCESS,checkGroupIds);
+    }
+
 }

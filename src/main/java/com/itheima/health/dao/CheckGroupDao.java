@@ -70,4 +70,8 @@ public interface CheckGroupDao {
     void deleteById(@Param("id") Integer id);
 
     List<CheckItem> selectCheckItemsByCheckGroupId(Integer id);
+
+    void deleteSetmealAndCheckGroupIdBySetmealId(Integer setmealId);
+
+    List<Integer> findCheckGroupIdsBySeymealId(Integer id);
 }

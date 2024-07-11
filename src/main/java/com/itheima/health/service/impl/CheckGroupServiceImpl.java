@@ -93,4 +93,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //实际删除操作
         checkGroupDao.deleteById(id);
     }
+
+    @Override
+    public List<Integer> findCheckGroupIdsBySeymealId(Integer id) {
+        List<Integer> checkGroupIds = checkGroupDao.findCheckGroupIdsBySeymealId(id);
+        return checkGroupIds;
+    }
 }

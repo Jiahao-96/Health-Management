@@ -4,6 +4,7 @@ package com.itheima.health.service;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.pojo.result.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,4 +41,10 @@ public interface SetMealService {
      * @return
      */
     Setmeal findById(Integer id);
+
+
+    void edit(Setmeal setmeal, List<Integer> checkGroupIds);
+
+
+    void deleteSetmealById(Integer id);
 }

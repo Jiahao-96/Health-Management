@@ -56,4 +56,7 @@ public interface CheckGroupService {
     List<CheckGroup> findAll();
 
     public void delete(int id);
+
+
+    List<Integer> findCheckGroupIdsBySeymealId(Integer id);
 }

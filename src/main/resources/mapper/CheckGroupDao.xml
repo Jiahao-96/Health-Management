@@ -57,4 +57,15 @@
         delete from t_checkgroup
         where id = #{id}
     </delete>
+
+
+    <!--依据套餐id获取绑定的检查组id-->
+    <select id="findCheckGroupIdsBySeymealId" resultType="java.lang.Integer">
+        select t1.id from t_checkgroup t1 , t_setmeal_checkgroup t2 where t1.id = t2.checkgroup_id and t2.setmeal_id = #{id}
+    </select>
+
+    <!--依据套餐删除绑定检查组-->
+    <delete id="deleteSetmealAndCheckGroupIdBySetmealId">
+        delete from t_setmeal_checkgroup where setmeal_id = #{setmealId}
+    </delete>
 </mapper>

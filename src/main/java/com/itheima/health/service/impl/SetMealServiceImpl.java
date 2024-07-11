@@ -2,6 +2,7 @@ package com.itheima.health.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.itheima.health.dao.CheckGroupDao;
 import com.itheima.health.dao.SetMealDao;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.Setmeal;
@@ -27,6 +28,9 @@ public class SetMealServiceImpl implements SetMealService {
     private SetMealDao setMealDao;
     @Autowired
     private AliOssProperties aliOssProperties;
+
+    @Autowired
+    private CheckGroupDao checkGroupDao;
 
     @Transactional
     @Override
@@ -70,4 +74,31 @@ public class SetMealServiceImpl implements SetMealService {
         setmeal.setImg(aliOssProperties.getUrlPrefix()+setmeal.getImg());
         return setmeal;
     }
+
+
+    @Transactional
+    @Override
+    public void edit(Setmeal setmeal, List<Integer> checkGroupIds) {
+        //1.修改基本信息(图片链接需要处理)
+        setMealDao.edit(setmeal);
+        //2.删除原有的绑定信息，插入新的绑定
+        Integer setmealId = setmeal.getId();
+        checkGroupDao.deleteSetmealAndCheckGroupIdBySetmealId(setmealId);
+        //不为空就插入
+        if (checkGroupIds !=null){
+            checkGroupIds.forEach(checkGroupid ->{
+                setMealDao.insertSetMealAndCheckGroup(setmealId,checkGroupid);
+            });
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteSetmealById(Integer id) {
+        //删除基本信息
+        setMealDao.deleteSetmealById(id);
+        //删除绑定检查组信息
+        checkGroupDao.deleteSetmealAndCheckGroupIdBySetmealId(id);
+    }
+
 }

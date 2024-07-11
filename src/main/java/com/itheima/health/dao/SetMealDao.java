@@ -50,4 +50,8 @@ public interface SetMealDao {
 
     List<String> selectAllimg();
 
+    void edit(Setmeal setmeal);
+
+    void deleteSetmealById(Integer id);
+
 }

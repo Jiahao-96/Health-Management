@@ -2,6 +2,7 @@ package com.itheima.health.controller;
 
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.common.RedisConst;
+import com.itheima.health.exception.BusinessRuntimeException;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.pojo.result.PageResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -68,16 +70,20 @@ public class SetMealController {
     @PostMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         log.info("[套餐-添加]data:{},checkgroupIds:{}", setmeal, checkgroupIds);
-
+        if (checkgroupIds == null || checkgroupIds.length == 0){
+            return new Result(false, MessageConst.ADD_SETMEAL_FAIL);
+        }
         //其实aliOssUtil.getUrlPrefix()的作用就是在这个地方把url中的域名替换为""吧。
         if (!StringUtils.isEmpty(setmeal.getImg())) {
             String img = setmeal.getImg().replace(aliOssUtil.getUrlPrefix(), "");
             setmeal.setImg(img);
         }
         setMealService.add(setmeal, checkgroupIds);
-        //数据库中的图片添加成功了，Redis中备份一份
+        //数据库中的图片添加成功了，Redis中备份一份,并创建一个id图片映射键值对
         if(!StringUtils.isEmpty(setmeal.getImg())){
             redisTemplate.opsForSet().add(RedisConst.MYSQL_PIC,setmeal.getImg());
+            redisTemplate.opsForValue().set(setmeal.getId(),setmeal.getImg());
+
         }
         return new Result(true, MessageConst.ADD_SETMEAL_SUCCESS);
     }
@@ -96,8 +102,52 @@ public class SetMealController {
     }
 
 
-//    编辑操作，删除时，删除垃圾图片该怎么办，
-//    通过传来的对象或id获取图片的名称，调用redis中set集合的删除方法，把该图片从mysql_redis中删掉。
-//    之后定时任务会自动删除阿里云中图片
+    /**
+     * 编辑套餐数据回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById")
+    public Result findById(@RequestParam Integer id){
+        Setmeal setmeal = setMealService.findById(id);
+        return new Result(true,MessageConst.QUERY_SETMEAL_SUCCESS,setmeal);
+    }
+
+    /**
+     * 修改套餐信息
+     * @param setmeal
+     * @param checkGroupIds
+     * @return
+     */
+    @PostMapping("/edit")
+    public Result edit(@RequestBody Setmeal setmeal , @RequestParam List<Integer> checkGroupIds){
+        if (checkGroupIds == null || checkGroupIds.size() == 0){
+            return new Result(false, MessageConst.ACTION_FAIL);
+        }
+        setmeal.setImg(setmeal.getImg().replace(aliOssUtil.getUrlPrefix(), ""));
+        String img = (String)redisTemplate.opsForValue().get(setmeal.getId());
+        if (!setmeal.getImg().equals(img)){
+            redisTemplate.opsForSet().remove(RedisConst.MYSQL_PIC,img);
+            redisTemplate.delete(setmeal.getId());
+        }
+
+        setMealService.edit(setmeal,checkGroupIds);
+        return new Result(true,"编辑套餐成功");
+    }
+
+    /**
+     * 删除套餐
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteSetmealById")
+    public Result deleteSetmealById(@RequestParam Integer id){
+        setMealService.deleteSetmealById(id);
+        String img = (String)redisTemplate.opsForValue().get(id);
+        redisTemplate.opsForSet().remove(RedisConst.MYSQL_PIC,img);
+        redisTemplate.delete(id);
+        return new Result(true,"删除套餐成功");
+    }
+
 
 }
