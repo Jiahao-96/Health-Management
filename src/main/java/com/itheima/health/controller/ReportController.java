@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/report")
 @Slf4j
@@ -47,6 +49,18 @@ public class ReportController {
     public Result getBusinessReportData(){
         BusinessReport businessReport = reportService.getBusinessReportData();
         return new Result(true, MessageConst.GET_BUSINESS_REPORT_FAIL,businessReport);
+    }
+
+    /**
+     * 导出报表
+     * @return
+     */
+    @GetMapping("/exportBusinessReport")
+    public Result exportBusinessReport(HttpServletResponse response){
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=report.xlsx");
+        reportService.exportBusinessReport(response);
+        return new Result(true, MessageConst.GET_BUSINESS_REPORT_FAIL);
     }
 
 

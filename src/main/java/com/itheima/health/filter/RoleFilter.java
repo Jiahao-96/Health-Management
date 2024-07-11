@@ -32,6 +32,11 @@ public class RoleFilter implements Filter {
             chain.doFilter(request,response);
             return;
         }
+        if(request.getRequestURL().toString().contains("mobile")){
+            log.info("手机端，直接放行");
+            chain.doFilter(request,response);
+            return;
+        }
 
         //不是登录请求，获取用户权限信息
         HttpSession session = request.getSession();

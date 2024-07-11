@@ -99,4 +99,5 @@ public class SetMealController {
 //    编辑操作，删除时，删除垃圾图片该怎么办，
 //    通过传来的对象或id获取图片的名称，调用redis中set集合的删除方法，把该图片从mysql_redis中删掉。
 //    之后定时任务会自动删除阿里云中图片
+
 }

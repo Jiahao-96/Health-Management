@@ -5,6 +5,10 @@ import com.itheima.health.dao.*;
 import com.itheima.health.pojo.entity.*;
 import com.itheima.health.service.ReportService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +16,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.*;
@@ -33,6 +40,7 @@ public class ReportServiceImpl implements ReportService {
     private OrdersettingDao ordersettingDao;
     @Autowired
     private MemberDao memberDao;
+
 
     @Override
     public MemberReport getMemberReport() {
@@ -71,22 +79,23 @@ public class ReportServiceImpl implements ReportService {
         Integer reservationsMonth = ordersettingDao.searchOrdersettingNumberByMonth(monthStartDay, nowDay);
         reservationsMonth = reservationsMonth == null ? 0 : reservationsMonth;
 
-        //热门套餐名称和数量
-        List<HotSetmealInfo> hotSetmealOld = reportDao.searchHotSetmealNameAndOrderNumber();
-
-        //套餐总量
-        Integer allSetmealNumber = reportDao.searchAllSetmealNumber();
-
-        //计算套餐占比
-        List<HotSetmealInfo> hotSetmeal = hotSetmealOld.stream().map(hotSetmealInfo -> {
-            //精度浮点数，四舍五入
-            hotSetmealInfo.setProportion(BigDecimal.valueOf((1.0 * hotSetmealInfo.getSetmeal_count() / allSetmealNumber)).setScale(3, RoundingMode.HALF_UP));
-            return hotSetmealInfo;
-        }).collect(Collectors.toList());
-
         //总会员数
         Integer totalMember = memberDao.searchMemberNumberByDayOrAll(null);
 
+        //热门套餐名称和数量
+        List<HotSetmealInfo> hotSetmealOld = reportDao.searchHotSetmealNameAndOrderNumber();
+        List<HotSetmealInfo> hotSetmeal = null;
+        if (hotSetmealOld != null && hotSetmealOld.size() > 0){
+            //套餐总量
+            Integer allSetmealNumber = reportDao.searchAllSetmealNumber();
+
+            //计算套餐占比
+            hotSetmeal = hotSetmealOld.stream().map(hotSetmealInfo -> {
+                //精度浮点数，四舍五入
+                hotSetmealInfo.setProportion(BigDecimal.valueOf((1.0 * hotSetmealInfo.getSetmeal_count() / allSetmealNumber)).setScale(3, RoundingMode.HALF_UP));
+                return hotSetmealInfo;
+            }).collect(Collectors.toList());
+        }
 
         //日、月、周就诊人数和会员数直接封装
         BusinessReport businessReport = BusinessReport.builder().
@@ -103,6 +112,83 @@ public class ReportServiceImpl implements ReportService {
                 hotSetmeal(hotSetmeal).
                 reportDate(nowDay).build();
         return businessReport;
+    }
+
+    @Override
+    public void exportBusinessReport(HttpServletResponse response) {
+
+        BusinessReport businessReport = getBusinessReportData();
+        //查询概览运营数据，提交给Excel模版文件
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("template/report_template.xlsx");
+        try {
+            //基于提供好的模板文件创建一个新的Excel表格对象
+            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(resourceAsStream);
+            //获得Excel文件中的一个Sheet页
+            XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
+            XSSFRow row2 = sheet.getRow(2);
+            XSSFCell cell = row2.getCell(5);
+            cell.setCellValue(businessReport.getReportDate().toString());
+
+            //会员数据统计
+            //获取第四行
+            XSSFRow row4 = sheet.getRow(4);
+            //获取单元格
+            XSSFCell newMember = row4.getCell(5);
+            newMember.setCellValue(businessReport.getTodayNewMember());
+            XSSFCell allMember = row4.getCell(7);
+            allMember.setCellValue(businessReport.getTotalMember());
+
+            //获取第五行
+            XSSFRow row5 = sheet.getRow(5);
+            //获取单元格
+            XSSFCell weekNewMember = row5.getCell(5);
+            weekNewMember.setCellValue(businessReport.getThisWeekNewMember());
+            XSSFCell monthNewMember = row5.getCell(7);
+            monthNewMember.setCellValue(businessReport.getThisMonthNewMember());
+
+            //预约到诊数据统计
+            //订单完成率
+            //获取第六行
+            XSSFRow row7 = sheet.getRow(7);
+            XSSFCell newOrder = row7.getCell(5);
+            newOrder.setCellValue(businessReport.getTodayOrderNumber());
+            XSSFCell newVisits = row7.getCell(7);
+            newVisits.setCellValue(businessReport.getTodayVisitsNumber());
+
+            //获取第七行
+            XSSFRow row8 = sheet.getRow(8);
+            XSSFCell weekNewOrder = row8.getCell(5);
+            weekNewOrder.setCellValue(businessReport.getThisWeekOrderNumber());
+            XSSFCell weekNewVisits = row8.getCell(7);
+            weekNewVisits.setCellValue(businessReport.getThisWeekVisitsNumber());
+
+            //获取第八行
+            XSSFRow row9 = sheet.getRow(9);
+            XSSFCell monthNewOrder = row9.getCell(5);
+            monthNewOrder.setCellValue(businessReport.getThisMonthOrderNumber());
+            XSSFCell monthNewVisits = row9.getCell(7);
+            monthNewVisits.setCellValue(businessReport.getThisMonthVisitsNumber());
+
+            //热门套餐
+            List<HotSetmealInfo> hotSetmeal = businessReport.getHotSetmeal();
+            for (int i = 0; i < hotSetmeal.size(); i++) {
+                HotSetmealInfo hotSetmealInfo = hotSetmeal.get(i);
+                XSSFRow row11 = sheet.getRow(12+i);
+                row11.getCell(4).setCellValue(hotSetmealInfo.getName());
+                row11.getCell(5).setCellValue(hotSetmealInfo.getSetmeal_count());
+                row11.getCell(6).setCellValue(hotSetmealInfo.getProportion().toString());
+                row11.getCell(7).setCellValue("备注个der");
+            }
+
+            ServletOutputStream outputStream = response.getOutputStream();
+
+            xssfWorkbook.write(outputStream);
+            outputStream.close();
+            xssfWorkbook.close();
+            resourceAsStream.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
