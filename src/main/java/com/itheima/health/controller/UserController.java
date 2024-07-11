@@ -75,7 +75,13 @@ public class UserController {
         session.setAttribute("user",user);
         List<String> links = userService.searchMenu(user);
         if (links != null && links.size() > 0){
-            List<String> paths = links.stream().map(link -> link.substring(0, link.lastIndexOf("."))).collect(Collectors.toList());
+            List<String> paths = links.stream().map(link -> link.substring(0, link.lastIndexOf("."))).map(link2-> {
+                if(link2.contains("_")){
+                    String path = link2.substring(0, link2.indexOf("_"));
+                    return path;
+                }
+                return link2;
+            }).distinct().collect(Collectors.toList());
             redisTemplate.opsForSet().add(user.getId()+"paths",paths.toArray());
         }
 
@@ -90,5 +96,22 @@ public class UserController {
         response.sendRedirect("http://localhost:18080/pages/login.html");
         return new Result(true, MessageConst.ACTION_SUCCESS);
     }
+
+    /**
+     * 获取用户名称
+     * @param response
+     * @param request
+     * @return
+     */
+    @GetMapping("/getUsername")
+    public Result getUsername(HttpServletResponse response,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        String username = user.getUsername();
+        return new Result(true, MessageConst.ACTION_SUCCESS,username);
+    }
+
+
+
 
 }

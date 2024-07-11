@@ -41,10 +41,10 @@ public class RoleFilter implements Filter {
             String[] split = request.getRequestURI().toString().split("/");
             String path = split[1];
             if (paths.contains(path)){
-                log.info("有权限，直接放行");
+                log.info(user.getUsername()+"有权限访问"+path+"路径，直接放行");
                 chain.doFilter(request,response);
             }else {
-                log.info("没有权限访问");
+                log.info(user.getUsername()+"没有权限访问"+path+"路径，不能放行");
                 Result result = new Result(false,"没有权限访问");
                 String jsonString = JSON.toJSONString(result);
                 response.setContentType("text/json;charset=utf-8");
