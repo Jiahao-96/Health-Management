@@ -8,4 +8,19 @@
             parameterType="java.lang.String">
         select * from t_member where phoneNumber = #{phoneNumber}
     </select>
+    <select id="searchMemberNumberByDayOrAll" resultType="java.lang.Integer" parameterType="java.time.LocalDate">
+        select count(*) from t_member
+        <where>
+            <if test="nowDay != null">
+                regTime = #{nowDay}
+            </if>
+        </where>
+    </select>
+
+    <select id="searchMemberNumberByWeek" resultType="java.lang.Integer">
+        select count(*) from t_member where regTime between #{weekStartDay} and #{nowDay}
+    </select>
+    <select id="searchMemberNumberByMonth" resultType="java.lang.Integer">
+        select count(*) from t_member where regTime between #{monthStartDay} and #{nowDay}
+    </select>
 </mapper>

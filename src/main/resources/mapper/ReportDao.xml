@@ -4,4 +4,25 @@
     <select id="searchMemberNumberByMonth" resultType="java.lang.Integer">
         select count(*) from t_member where regTime between #{startDay} and #{endDay}
     </select>
+    <select id="searchSetmealName" resultType="java.lang.String">
+        select name from t_setmeal
+    </select>
+    <select id="searchSetmealNameAndOrderNumber" resultType="com.itheima.health.pojo.entity.SetmealNameValue">
+        select f1.name name, count(setmeal_id) value
+        from t_setmeal f1,
+             t_order f2
+        where f1.id = f2.setmeal_id
+        group by setmeal_id
+    </select>
+    <select id="searchAllSetmealNumber" resultType="java.lang.Integer">
+        select count(*)
+        from  t_order f2
+    </select>
+    <select id="searchHotSetmealNameAndOrderNumber" resultType="com.itheima.health.pojo.entity.HotSetmealInfo">
+        select f1.name name, count(setmeal_id) setmeal_count
+        from t_setmeal f1,
+             t_order f2
+        where f1.id = f2.setmeal_id
+        group by setmeal_id order by setmeal_count desc limit 0 , 3
+    </select>
 </mapper>

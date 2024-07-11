@@ -32,7 +32,6 @@ public class CheckGroupController {
         return new Result(true, MessageConst.ADD_CHECKGROUP_SUCCESS);
     }
 
-
     /**
      * 分页查询
      *
@@ -79,7 +78,6 @@ public class CheckGroupController {
         List<Integer> itemIds = checkGroupService.findCheckItemIdsByCheckGroupId(id);
         //封装返回值
         return new Result(true, MessageConst.ACTION_SUCCESS, itemIds);
-
     }
 
     /**
@@ -94,7 +92,6 @@ public class CheckGroupController {
         //RPC请求添加
         checkGroupService.edit(checkGroup, checkitemIds);
         return new Result(true, MessageConst.EDIT_CHECKGROUP_SUCCESS);
-
     }
 
     /**
@@ -110,6 +107,11 @@ public class CheckGroupController {
         return new Result(true, MessageConst.QUERY_CHECKGROUP_SUCCESS, checkGroups);
     }
 
+    /**
+     * 根据id删除检查组
+     * @param id
+     * @return
+     */
     @PostMapping("/deleteCheckGroupitemById")
     public Result deleteCheckGroupitemById(@RequestParam("id") Integer id){
         try {

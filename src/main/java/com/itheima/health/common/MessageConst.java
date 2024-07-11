@@ -10,7 +10,8 @@ public class MessageConst {
     public static final String ACTION_SUCCESS = "操作成功";
     public static final String ACTION_FAIL = "操作失败";
     public static final String LOGIN_SUCCESS = "登录成功";
-    public static final String LOGIN_FAIL = "登录失败";
+    public static final String LOGIN_FAIL_USERNAME = "用户名不正确";
+    public static final String LOGIN_FAIL_PASSWORD = "密码不正确";
     public static final String DELETE_CHECKITEM_FAIL = "删除检查项失败";
     public static final String DELETE_CHECKITEM_SUCCESS = "删除检查项成功";
     public static final String ADD_CHECKITEM_SUCCESS = "新增检查项成功";

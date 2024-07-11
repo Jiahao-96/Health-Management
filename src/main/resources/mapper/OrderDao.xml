@@ -26,4 +26,14 @@
           and f1.id = #{orderId}
 
     </select>
+    <select id="searchVisitsNumberByDay" resultType="java.lang.Integer" parameterType="java.time.LocalDate">
+        select count(*) from t_order where orderDate = #{nowDay} and orderStatus = '已到诊'
+    </select>
+    <select id="searchVisitsNumberByWeek" resultType="java.lang.Integer">
+        select count(*) from t_order where orderDate between #{weekStartDay} and #{nowDay} and orderStatus = '已到诊'
+    </select>
+    <select id="searchVisitsNumberByMonth" resultType="java.lang.Integer">
+        select count(*) from t_order where orderDate between #{monthStartDay} and #{nowDay} and orderStatus = '已到诊'
+
+    </select>
 </mapper>

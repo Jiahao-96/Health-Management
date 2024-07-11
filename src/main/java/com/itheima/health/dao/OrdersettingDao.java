@@ -17,4 +17,10 @@ public interface OrdersettingDao {
 
     Integer searchOrdersettingNumber(Date orderDate);
 
+    Integer searchOrdersettingNumberByDay(LocalDate nowDay);
+
+    Integer searchOrdersettingNumberByWeek(LocalDate weekStartDay, LocalDate nowDay);
+
+    Integer searchOrdersettingNumberByMonth(LocalDate monthStartDay, LocalDate nowDay);
+
 }

@@ -40,8 +40,8 @@ public class UserController {
         //调用service查询用户信息
         User user = userService.findByUsername(dto.getUsername());
         if (null == user) {
-            log.info("【登录】失败，userName:{}", dto.getUsername());
-            return new Result(false, MessageConst.LOGIN_FAIL);
+            log.info("用户名不正确，userName:{}", dto.getUsername());
+            return new Result(false, MessageConst.LOGIN_FAIL_USERNAME);
         }
         //获取用户数据库储存密码
         String userMysqlPassword = user.getPassword();
@@ -55,8 +55,8 @@ public class UserController {
                 //使用md5加密方式，用户不存在或密码不匹配则登录失败
                 String passwordMD5 = DigestUtils.md5DigestAsHex(dto.getPassword().getBytes());
                 if (null == user || !userPassword.equals(passwordMD5)) {
-                    log.info("【登录】失败，userName:{}", dto.getUsername());
-                    return new Result(false, MessageConst.LOGIN_FAIL);
+                    log.info("密码不正确，userName:{}", dto.getUsername());
+                    return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
                 }
                 break;
             case PasswordMethodConst.BCRYPT:
@@ -64,7 +64,7 @@ public class UserController {
                 //直接使用Bcrypt的校验方法，使用加密前的密码和加密后的密码和进行比较就行。
                 if (null == user || !BCrypt.checkpw(dto.getPassword(),userPassword)) {
                     log.info("【登录】失败，userName:{}", dto.getUsername());
-                    return new Result(false, MessageConst.LOGIN_FAIL);
+                    return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
                 }
                 break;
         }

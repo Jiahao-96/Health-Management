@@ -13,4 +13,14 @@
     <select id="searchOrdersettingNumber" resultType="java.lang.Integer" parameterType="java.util.Date">
         select number from t_ordersetting where orderDate = #{orderDate}
     </select>
+    <select id="searchOrdersettingNumberByDay" resultType="java.lang.Integer"
+            parameterType="java.time.LocalDate">
+        select sum(reservations) from t_ordersetting where orderDate = #{nowDay}
+    </select>
+    <select id="searchOrdersettingNumberByWeek" resultType="java.lang.Integer">
+        select sum(reservations) from t_ordersetting where orderDate between #{weekStartDay} and #{nowDay}
+    </select>
+    <select id="searchOrdersettingNumberByMonth" resultType="java.lang.Integer">
+        select sum(reservations) from t_ordersetting where orderDate between #{monthStartDay} and #{nowDay}
+    </select>
 </mapper>
