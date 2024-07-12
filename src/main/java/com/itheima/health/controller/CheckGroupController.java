@@ -1,7 +1,9 @@
 package com.itheima.health.controller;
 
 
+import com.itheima.health.anno.L2Cache;
 import com.itheima.health.anno.LogInfo;
+import com.itheima.health.common.CacheType;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.CheckGroup;
@@ -28,6 +30,7 @@ public class CheckGroupController {
      */
     @LogInfo
     @RequestMapping("/add")
+    @L2Cache(cacheName = "check",key = "'checkGroup'", type = CacheType.DELETE)
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         log.info("[检查组-添加]data:{},checkitemIds:{}", checkGroup, checkitemIds);
         //RPC请求添加
@@ -42,6 +45,10 @@ public class CheckGroupController {
      * @return
      */
     @GetMapping("findPage")
+    @L2Cache(cacheName = "checkGroup", key ="#queryPageBean.currentPage " +
+            "+ ':' + #queryPageBean.pageSize" +
+            "+ '_' + #queryPageBean.queryString",
+            type = CacheType.FULL)
     public Result findPage(QueryPageBeanDTO queryPageBean) {
         log.info("[检查组-分页查询]data:{}", queryPageBean);
         //rpc查询结果
@@ -56,6 +63,7 @@ public class CheckGroupController {
      * @param id
      * @return
      */
+    @L2Cache(cacheName = "checkGroup", key ="'findById' + #id", type = CacheType.FULL)
     @RequestMapping("/findById")
     public Result findById(Integer id) {
         log.info("[检查组-根据id查询]id:{}", id);
@@ -73,6 +81,7 @@ public class CheckGroupController {
      * @param id
      * @return
      */
+    @L2Cache(cacheName = "checkGroup", key ="'findCheckItemIds' + #id", type = CacheType.FULL)
     @RequestMapping("/findCheckItemIdsByCheckGroupId")
     public Result findCheckItemIdsByCheckGroupId(Integer id) {
         log.info("[检查组-根据检查组ID查询关联的检查项ID集和]id:{}", id);
@@ -88,6 +97,7 @@ public class CheckGroupController {
      *
      * @return
      */
+    @L2Cache(cacheName = "check",key = "'checkGroup'", type = CacheType.DELETE)
     @LogInfo
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
@@ -103,6 +113,7 @@ public class CheckGroupController {
      *
      * @return
      */
+    @L2Cache(cacheName = "checkGroup", key ="'findAll'", type = CacheType.FULL)
     @RequestMapping("/findAll")
     public Result findAll() {
         //rpc调用查询数据
@@ -118,6 +129,7 @@ public class CheckGroupController {
      */
     @LogInfo
     @PostMapping("/deleteCheckGroupitemById")
+    @L2Cache(cacheName = "check",key = "'checkGroup'", type = CacheType.DELETE)
     public Result deleteCheckGroupitemById(@RequestParam("id") Integer id){
         try {
             checkGroupService.delete(id);
@@ -134,6 +146,7 @@ public class CheckGroupController {
      * @return
      */
     @GetMapping("/findCheckGroupIdsBySetmealId")
+    @L2Cache(cacheName = "checkGroup", key ="'findCheckGroupIdsBySetmealId' + #id", type = CacheType.FULL)
     public Result findCheckGroupIdsBySeymealId(@RequestParam Integer id){
         List<Integer> checkGroupIds = checkGroupService.findCheckGroupIdsBySeymealId(id);
         return new Result(true,MessageConst.ACTION_SUCCESS,checkGroupIds);

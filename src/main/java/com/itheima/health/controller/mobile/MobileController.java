@@ -1,5 +1,7 @@
 package com.itheima.health.controller.mobile;
 
+import com.itheima.health.anno.L2Cache;
+import com.itheima.health.common.CacheType;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.dto.SubmitDTO;
 import com.itheima.health.pojo.dto.ValidateCodeDTO;
@@ -60,7 +62,6 @@ public class MobileController {
      */
     @GetMapping("/setmeal/findById")
     public Result findById(String id){
-
         Setmeal setmeal = mobileService.findById(id);
         log.info(setmeal.toString());
         return new Result(true,MessageConst.QUERY_SETMEAL_SUCCESS,setmeal);

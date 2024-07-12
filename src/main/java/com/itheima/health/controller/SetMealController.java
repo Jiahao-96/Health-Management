@@ -1,6 +1,8 @@
 package com.itheima.health.controller;
 
+import com.itheima.health.anno.L2Cache;
 import com.itheima.health.anno.LogInfo;
+import com.itheima.health.common.CacheType;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.common.RedisConst;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
