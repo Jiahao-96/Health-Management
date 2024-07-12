@@ -42,6 +42,8 @@ public class UserController {
     @PostMapping("/login")
     public Result login(HttpServletRequest request, @RequestBody LoginDTO dto) {
         log.info("【登录】 dto:{}", dto);
+        String name = Thread.currentThread().getName();
+        log.info(Thread.currentThread().getName());
         //调用service查询用户信息
         User user = userService.findByUsername(dto.getUsername());
         if (null == user) {

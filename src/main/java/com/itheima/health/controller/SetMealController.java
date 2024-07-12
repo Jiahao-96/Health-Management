@@ -30,7 +30,7 @@ public class SetMealController {
     @Autowired
     private AliOssUtil aliOssUtil;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate ;
 
     /**
      * 图片上传

@@ -4,9 +4,11 @@
     <insert id="insertOrderSetting" parameterType="com.itheima.health.pojo.entity.OrderSetting">
         insert into t_ordersetting (id, orderDate, number, reservations) VALUES (#{id},#{orderDate},#{number},#{reservations})
     </insert>
+
     <update id="editNumberByDate">
         update t_ordersetting set number = #{number} where orderDate = #{orderDate}
     </update>
+
     <select id="getOrderSettingByMonth" resultType="com.itheima.health.pojo.entity.OrderSetting">
         select * from t_ordersetting where orderDate between #{start} and #{end}
     </select>

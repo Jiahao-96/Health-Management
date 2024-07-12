@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DeleteFilesTask {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate ;
     @Autowired
     private AliOssUtil aliOssUtil;
 
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void processDeleteFiles() {
         log.info("调用了删除垃圾图片的定时方法捏");
         //获取redis中存的数据库图片和阿里云图片

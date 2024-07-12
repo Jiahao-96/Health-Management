@@ -16,7 +16,7 @@ import java.util.Set;
 @WebFilter(urlPatterns = "/*")
 public class RoleFilter implements Filter {
     @Autowired
-    RedisTemplate redisTemplate = new RedisTemplate<>();
+    RedisTemplate redisTemplate ;
     @Override
     public void doFilter(ServletRequest rq, ServletResponse rp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)rq;

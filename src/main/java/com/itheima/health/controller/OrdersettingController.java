@@ -57,6 +57,7 @@ public class OrdersettingController {
     @LogInfo
     @PostMapping("/editNumberByDate")
     public Result editNumberByDate (@RequestBody OrderSetting orderSetting){
+
         ordersettingService.editNumberByDate(orderSetting);
         return new Result(true,MessageConst.ORDERSETTING_SUCCESS);
     }

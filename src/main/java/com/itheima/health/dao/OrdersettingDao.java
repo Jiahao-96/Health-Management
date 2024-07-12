@@ -13,7 +13,7 @@ public interface OrdersettingDao {
 
     List<OrderSetting> getOrderSettingByMonth(LocalDate start, LocalDate end);
 
-    void editNumberByDate(OrderSetting orderSetting);
+    Integer editNumberByDate(OrderSetting orderSetting);
 
     Integer searchOrdersettingNumber(Date orderDate);
 

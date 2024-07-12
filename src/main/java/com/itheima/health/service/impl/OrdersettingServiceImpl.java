@@ -37,7 +37,6 @@ public class OrdersettingServiceImpl implements OrdersettingService {
                 ordersettingDao.insertOrderSetting(orderSetting);
             }
 
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -64,6 +63,9 @@ public class OrdersettingServiceImpl implements OrdersettingService {
 
     @Override
     public void editNumberByDate(OrderSetting orderSetting) {
-        ordersettingDao.editNumberByDate(orderSetting);
+        Integer integer = ordersettingDao.editNumberByDate(orderSetting);
+        if (integer == 0){
+            ordersettingDao.insertOrderSetting(orderSetting);
+        }
     }
 }
