@@ -55,6 +55,7 @@ public class RoleFilter implements Filter {
                 String jsonString = JSON.toJSONString(result);
                 response.setContentType("text/json;charset=utf-8");
                 response.getWriter().write(jsonString);
+
             }
         }else{
             //没登录,重定向到登录界面

@@ -29,8 +29,6 @@ public  class EncryptionToolsUtil {
     private Integer keyLength;
     private String sceretKey;
 
-
-
     /**
      * 校验密码
      * @param password

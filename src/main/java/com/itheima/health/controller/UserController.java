@@ -58,7 +58,6 @@ public class UserController {
             return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
         }
 
-
         //用户登录成功
         log.info("【登录】成功，userName:{}", user.getUsername());
         //将用户信息存入Session对象中
