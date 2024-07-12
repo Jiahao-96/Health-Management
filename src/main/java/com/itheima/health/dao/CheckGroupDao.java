@@ -69,9 +69,23 @@ public interface CheckGroupDao {
      */
     void deleteById(@Param("id") Integer id);
 
+    /**
+     * 根据检查组id查询检查项
+     * @param id
+     * @return
+     */
     List<CheckItem> selectCheckItemsByCheckGroupId(Integer id);
 
+    /**
+     * 根据套餐id删除检查组和套餐
+     * @param setmealId
+     */
     void deleteSetmealAndCheckGroupIdBySetmealId(Integer setmealId);
 
+    /**
+     *根据套餐id查询检查组
+     * @param id
+     * @return
+     */
     List<Integer> findCheckGroupIdsBySeymealId(Integer id);
 }

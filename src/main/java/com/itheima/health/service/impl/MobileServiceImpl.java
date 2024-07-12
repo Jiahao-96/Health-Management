@@ -160,6 +160,11 @@ public class MobileServiceImpl implements MobileService {
 
     }
 
+    /**
+     * 根据id查询成功信息
+     * @param id
+     * @return
+     */
     @Override
     public OrderInfo searchOrderSucessBySetmealId(Integer id) {
         //order表、成员表，套餐表

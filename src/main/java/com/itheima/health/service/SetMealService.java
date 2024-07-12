@@ -43,8 +43,17 @@ public interface SetMealService {
     Setmeal findById(Integer id);
 
 
+    /**
+     * 编辑套餐
+     * @param setmeal
+     * @param checkGroupIds
+     */
     void edit(Setmeal setmeal, List<Integer> checkGroupIds);
 
 
+    /**
+     * 删除套餐
+     * @param id
+     */
     void deleteSetmealById(Integer id);
 }

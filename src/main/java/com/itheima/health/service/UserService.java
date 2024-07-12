@@ -19,6 +19,11 @@ public interface UserService {
      */
     User findByUsername(String username);
 
+    /**
+     * 查询用户可访问页面
+     * @param user
+     * @return
+     */
     List<String> searchMenu(User user);
 
 }

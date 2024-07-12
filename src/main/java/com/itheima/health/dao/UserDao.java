@@ -23,6 +23,11 @@ public interface UserDao {
      */
     User selectByUsername(@Param("username") String username);
 
+    /**
+     * 查询可访问菜单
+     * @param user
+     * @return
+     */
     List<String> searchMenu(User user);
 
 }

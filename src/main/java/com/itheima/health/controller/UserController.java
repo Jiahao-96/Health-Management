@@ -88,7 +88,13 @@ public class UserController {
         return new Result(true, MessageConst.LOGIN_SUCCESS);
     }
 
-    //退出登录
+    /**
+     * 退出登录
+     * @param response
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/logout")
     public Result logout(HttpServletResponse response,HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();

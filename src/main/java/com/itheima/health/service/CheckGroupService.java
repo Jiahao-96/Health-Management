@@ -55,8 +55,14 @@ public interface CheckGroupService {
      */
     List<CheckGroup> findAll();
 
+
     public void delete(int id);
 
 
+    /**
+     * 根据套餐id查询检查组
+     * @param id
+     * @return
+     */
     List<Integer> findCheckGroupIdsBySeymealId(Integer id);
 }
