@@ -1,5 +1,6 @@
 package com.itheima.health.controller;
 
+import com.itheima.health.anno.Log;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.entity.OrderSetting;
 import com.itheima.health.pojo.result.Result;
@@ -28,6 +29,7 @@ public class OrdersettingController {
      * @return
      * @throws Exception
      */
+    @Log
     @PostMapping("/upload")
     public Result upload(MultipartFile excelFile)  {
         ordersettingService.insertOrderSetting(excelFile);
@@ -51,6 +53,7 @@ public class OrdersettingController {
      * @param orderSetting
      * @return
      */
+    @Log
     @PostMapping("/editNumberByDate")
     public Result editNumberByDate (@RequestBody OrderSetting orderSetting){
         ordersettingService.editNumberByDate(orderSetting);

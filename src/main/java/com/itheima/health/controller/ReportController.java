@@ -1,6 +1,7 @@
 package com.itheima.health.controller;
 
 
+import com.itheima.health.anno.Log;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.entity.BusinessReport;
 import com.itheima.health.pojo.entity.MemberReport;
@@ -55,6 +56,7 @@ public class ReportController {
      * 导出报表
      * @return
      */
+    @Log
     @GetMapping("/exportBusinessReport")
     public Result exportBusinessReport(HttpServletResponse response){
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

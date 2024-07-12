@@ -1,5 +1,6 @@
 package com.itheima.health.controller;
 
+import com.itheima.health.anno.Log;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.common.RedisConst;
 import com.itheima.health.exception.BusinessRuntimeException;
@@ -67,6 +68,7 @@ public class SetMealController {
      * @param checkgroupIds 检查组ID列表
      * @return
      */
+    @Log
     @PostMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         log.info("[套餐-添加]data:{},checkgroupIds:{}", setmeal, checkgroupIds);
@@ -107,6 +109,7 @@ public class SetMealController {
      * @param id
      * @return
      */
+
     @GetMapping("/findById")
     public Result findById(@RequestParam Integer id){
         Setmeal setmeal = setMealService.findById(id);
@@ -119,6 +122,7 @@ public class SetMealController {
      * @param checkGroupIds
      * @return
      */
+    @Log
     @PostMapping("/edit")
     public Result edit(@RequestBody Setmeal setmeal , @RequestParam List<Integer> checkGroupIds){
         if (checkGroupIds == null || checkGroupIds.size() == 0){
@@ -140,6 +144,7 @@ public class SetMealController {
      * @param id
      * @return
      */
+    @Log
     @PostMapping("/deleteSetmealById")
     public Result deleteSetmealById(@RequestParam Integer id){
         setMealService.deleteSetmealById(id);

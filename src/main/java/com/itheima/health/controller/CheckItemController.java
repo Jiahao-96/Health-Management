@@ -1,5 +1,6 @@
 package com.itheima.health.controller;
 
+import com.itheima.health.anno.Log;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.result.PageResult;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
@@ -27,6 +28,7 @@ public class CheckItemController {
      * @param checkItem
      * @return
      */
+    @Log
     @PostMapping("/add")
     public Result add(@RequestBody CheckItem checkItem){
         log.info("[检查项-新增]data:{}",checkItem);
@@ -55,6 +57,7 @@ public class CheckItemController {
      * @param id
      * @return
      */
+    @Log
     @RequestMapping("/delete")
     public Result delete(Integer id){
         log.info("[检查项-根据id删除]id：{}",id);
@@ -69,6 +72,7 @@ public class CheckItemController {
      * @param checkItem
      * @return
      */
+    @Log
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckItem checkItem) {
         log.info("[检查项-编辑]data:{}", checkItem);
