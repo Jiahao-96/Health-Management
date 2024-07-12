@@ -1,5 +1,5 @@
 package com.itheima.health.controller;
-import com.itheima.health.anno.Log;
+import com.itheima.health.anno.LogInfo;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.common.PasswordMethodConst;
 import com.itheima.health.pojo.result.Result;
@@ -38,7 +38,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @Log
+    @LogInfo
     @PostMapping("/login")
     public Result login(HttpServletRequest request, @RequestBody LoginDTO dto) {
         log.info("【登录】 dto:{}", dto);

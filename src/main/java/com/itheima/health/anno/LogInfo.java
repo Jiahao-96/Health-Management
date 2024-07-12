@@ -1,4 +1,5 @@
 package com.itheima.health.anno;
 
-public @interface Log {
+public @interface LogInfo {
+
 }

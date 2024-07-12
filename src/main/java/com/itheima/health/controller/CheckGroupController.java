@@ -1,6 +1,7 @@
 package com.itheima.health.controller;
 
-import com.itheima.health.anno.Log;
+
+import com.itheima.health.anno.LogInfo;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.entity.CheckGroup;
@@ -25,7 +26,7 @@ public class CheckGroupController {
      *
      * @return
      */
-    @Log
+    @LogInfo
     @RequestMapping("/add")
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         log.info("[检查组-添加]data:{},checkitemIds:{}", checkGroup, checkitemIds);
@@ -87,7 +88,7 @@ public class CheckGroupController {
      *
      * @return
      */
-    @Log
+    @LogInfo
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         log.info("[检查组-编辑]data:{},checkitemIds:{}", checkGroup, checkitemIds);
@@ -115,7 +116,7 @@ public class CheckGroupController {
      * @param id
      * @return
      */
-    @Log
+    @LogInfo
     @PostMapping("/deleteCheckGroupitemById")
     public Result deleteCheckGroupitemById(@RequestParam("id") Integer id){
         try {

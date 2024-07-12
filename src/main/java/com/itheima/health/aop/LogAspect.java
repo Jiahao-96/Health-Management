@@ -26,7 +26,7 @@ public class LogAspect {
     private HttpServletRequest httpServletRequest;
     @Autowired
     private OperateLogDao operateLogDao;
-    @Around("@annotation(com.itheima.health.anno.Log)")
+    @Around("@annotation(com.itheima.health.anno.LogInfo)")
     public Object recordLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
         //调用原始目标方法运行

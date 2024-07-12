@@ -1,12 +1,13 @@
 package com.itheima.health.controller;
 
-import com.itheima.health.anno.Log;
+import com.itheima.health.anno.LogInfo;
 import com.itheima.health.common.MessageConst;
 import com.itheima.health.pojo.result.PageResult;
 import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.pojo.entity.CheckItem;
 import com.itheima.health.service.CheckItemService;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class CheckItemController {
      * @param checkItem
      * @return
      */
-    @Log
+    @LogInfo
     @PostMapping("/add")
     public Result add(@RequestBody CheckItem checkItem){
         log.info("[检查项-新增]data:{}",checkItem);
@@ -57,7 +58,7 @@ public class CheckItemController {
      * @param id
      * @return
      */
-    @Log
+    @LogInfo
     @RequestMapping("/delete")
     public Result delete(Integer id){
         log.info("[检查项-根据id删除]id：{}",id);
@@ -72,7 +73,7 @@ public class CheckItemController {
      * @param checkItem
      * @return
      */
-    @Log
+    @LogInfo
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckItem checkItem) {
         log.info("[检查项-编辑]data:{}", checkItem);
