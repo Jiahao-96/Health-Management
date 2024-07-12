@@ -70,9 +70,6 @@ public class DeleteFilesTask {
         redisTemplate.opsForSet().remove(RedisConst.ALIYUN_PIC,array);
         log.info("删除了这些垃圾照片捏：{}",rubbishImgs);
 
-//        //删除redis中的阿里云和mysql的图片集合 TODO
-//        redisTemplate.delete(RedisConst.MYSQL_PIC);
-//        redisTemplate.delete(RedisConst.ALIYUN_PIC);
 
     }
 

@@ -5,6 +5,7 @@ import com.itheima.health.pojo.result.Result;
 import com.itheima.health.pojo.entity.User;
 import com.itheima.health.service.UserService;
 import com.itheima.health.pojo.dto.LoginDTO;
+import com.itheima.health.utils.EncryptionToolsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    private EncryptionToolsUtil encryptionToolsUtil;
 
     /**
      * 根据用户名和密码登录
@@ -43,31 +46,17 @@ public class UserController {
             log.info("用户名不正确，userName:{}", dto.getUsername());
             return new Result(false, MessageConst.LOGIN_FAIL_USERNAME);
         }
+
+        // TODO: 2024/7/12 多种加密方式 (已完成MD5、bcrypt、pbkdf2加密)
         //获取用户数据库储存密码
         String userMysqlPassword = user.getPassword();
-        //截取用户密码的加密方式
-        String passwordMethod = userMysqlPassword.substring(userMysqlPassword.indexOf("{"), userMysqlPassword.lastIndexOf("}")+1);
-        //截取用户真正的密码
-        String userPassword = userMysqlPassword.substring(userMysqlPassword.lastIndexOf("}") + 1);
-        //使用指定加密方式进行密码比对
-        switch (passwordMethod) {
-            case PasswordMethodConst.MD5:
-                //使用md5加密方式，用户不存在或密码不匹配则登录失败
-                String passwordMD5 = DigestUtils.md5DigestAsHex(dto.getPassword().getBytes());
-                if (null == user || !userPassword.equals(passwordMD5)) {
-                    log.info("密码不正确，userName:{}", dto.getUsername());
-                    return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
-                }
-                break;
-            case PasswordMethodConst.BCRYPT:
-//                String passwordBcrypt = BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt());
-                //直接使用Bcrypt的校验方法，使用加密前的密码和加密后的密码和进行比较就行。
-                if (null == user || !BCrypt.checkpw(dto.getPassword(),userPassword)) {
-                    log.info("【登录】失败，userName:{}", dto.getUsername());
-                    return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
-                }
-                break;
+
+        if (!encryptionToolsUtil.checkPassword(dto.getPassword(),userMysqlPassword)){
+            log.info("密码不正确，userName:{}", dto.getUsername());
+            return new Result(false, MessageConst.LOGIN_FAIL_PASSWORD);
         }
+
+
         //用户登录成功
         log.info("【登录】成功，userName:{}", user.getUsername());
         //将用户信息存入Session对象中

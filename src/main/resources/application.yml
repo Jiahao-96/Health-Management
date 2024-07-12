@@ -59,3 +59,10 @@ health:
       accessKeySecret: ${health.aliyun.sms.accessKeySecret}
       signName: ${health.aliyun.sms.signName}
       templateCode: ${health.aliyun.sms.templateCode}
+
+  pbkdf2:
+    salt: ${health.pbkdf2.salt}
+    iterations: ${health.pbkdf2.iterations}
+    keyLength: ${health.pbkdf2.keyLength}
+    sceretKey: ${health.pbkdf2.sceretKey}
+
