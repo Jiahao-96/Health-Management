@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
 public class ThreadPoolConfigration {
-
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

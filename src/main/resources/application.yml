@@ -1,5 +1,28 @@
 server:
   port: 9002
+  servlet:
+    encoding:
+      charset: utf-8
+  tomcat:
+    uri-encoding: utf-8
+    # 连接最大支持的请求数
+    max-keep-alive-requests: 100
+    # 下次请求过来之前，tomcat保持该连接多久,如果未配置，那么默认为connection-timeout
+    keep-alive-timeout: 3000
+    connection-timeout: 3000
+    #最大链接数
+    max-connections: 10000
+    #最大等待队列长度
+    accept-count: 1000
+    threads:
+      #最小线程数
+      min-spare: 100
+      #最大线程数
+      max: 800
+    # 请求正文最大长度
+    max-swallow-size: 2097152
+  # http请求头最大长度
+  max-http-header-size: 1048576
 
 spring:
   application:
