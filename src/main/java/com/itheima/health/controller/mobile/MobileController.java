@@ -10,6 +10,7 @@ import com.itheima.health.pojo.entity.OrderInfo;
 import com.itheima.health.pojo.entity.Setmeal;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.MobileService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/mobile")
 @Slf4j
+@RequiredArgsConstructor
 public class MobileController {
-    @Autowired
-    private MobileService mobileService;
+
+    private final MobileService mobileService;
 
     /**
      * 发送验证码

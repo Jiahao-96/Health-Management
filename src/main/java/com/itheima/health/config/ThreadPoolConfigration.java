@@ -4,17 +4,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+
+import java.util.concurrent.ThreadPoolExecutor;
+
 @Configuration
 public class ThreadPoolConfigration {
 
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        // 设置核心线程数
         executor.setCorePoolSize(10);
+        // 设置最大线程数
         executor.setMaxPoolSize(20);
+        // 设置队列容量
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("MyApp-Task-");
-        // 还有其他的设置，比如 rejection-policy 等可以根据需要配置
+        // 设置线程名前缀
+        executor.setThreadNamePrefix("custom-thread-");
+        // 设置线程池对拒绝任务的处理策略
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // 初始化
+        executor.initialize();
         return executor;
     }
 }

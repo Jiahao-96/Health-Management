@@ -7,6 +7,7 @@ import com.itheima.health.pojo.dto.QueryPageBeanDTO;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.pojo.entity.CheckItem;
 import com.itheima.health.service.CheckItemService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/checkitem")
 @Slf4j
+@RequiredArgsConstructor
 public class CheckItemController {
 
-    @Autowired
-    private CheckItemService checkItemService;
+    private final CheckItemService checkItemService;
 
     /**
      * 新增

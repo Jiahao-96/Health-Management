@@ -10,6 +10,7 @@ import com.itheima.health.pojo.entity.CheckGroup;
 import com.itheima.health.pojo.result.PageResult;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.CheckGroupService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/checkgroup")
 @Slf4j
+@RequiredArgsConstructor
 public class CheckGroupController {
 
-    @Autowired
-    private CheckGroupService checkGroupService;
+    private final CheckGroupService checkGroupService;
     /**
      * 添加
      *

@@ -7,6 +7,7 @@ import com.itheima.health.pojo.entity.OrderSetting;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.OrdersettingService;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ordersetting")
+@RequiredArgsConstructor
 public class OrdersettingController {
-    @Autowired
-    private OrdersettingService ordersettingService;
+
+    private final OrdersettingService ordersettingService;
 
     /**
      * 解析上传的Excel文件

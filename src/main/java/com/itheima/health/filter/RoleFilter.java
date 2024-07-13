@@ -38,7 +38,7 @@ public class RoleFilter implements Filter {
             return;
         }
 
-        //不是登录请求，获取用户权限信息
+        //不是登录、退出登录、手机端请求，获取用户权限信息
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         if(user != null){

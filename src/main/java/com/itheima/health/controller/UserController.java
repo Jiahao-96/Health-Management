@@ -7,6 +7,7 @@ import com.itheima.health.pojo.entity.User;
 import com.itheima.health.service.UserService;
 import com.itheima.health.pojo.dto.LoginDTO;
 import com.itheima.health.utils.EncryptionToolsUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@RequiredArgsConstructor
 public class UserController {
     private static final String CURRENT_USER = "CURRENT_USER";
-    @Autowired
-    private UserService userService;
-    @Autowired
-    RedisTemplate redisTemplate;
-    @Autowired
-    private EncryptionToolsUtil encryptionToolsUtil;
+
+    private final UserService userService;
+
+    private final RedisTemplate redisTemplate;
+
+    private final EncryptionToolsUtil encryptionToolsUtil;
 
     /**
      * 根据用户名和密码登录

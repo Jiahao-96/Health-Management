@@ -1,8 +1,14 @@
 server:
   port: 9002
+
 spring:
   application:
     name: health_oms_backend
+  task:
+    execution:
+      pool:
+        size: 10
+        thread-name-prefix: custom-thread-
 
   #指定启动环境
   profiles:
@@ -65,4 +71,5 @@ health:
     iterations: ${health.pbkdf2.iterations}
     keyLength: ${health.pbkdf2.keyLength}
     sceretKey: ${health.pbkdf2.sceretKey}
+
 

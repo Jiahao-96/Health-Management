@@ -8,6 +8,7 @@ import com.itheima.health.pojo.entity.MemberReport;
 import com.itheima.health.pojo.entity.SetmealReport;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.ReportService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/report")
 @Slf4j
+@RequiredArgsConstructor
 public class ReportController {
-    @Autowired
-    private ReportService reportService;
+
+    private final ReportService reportService;
     /**
      * 统计会员数量
      * @return

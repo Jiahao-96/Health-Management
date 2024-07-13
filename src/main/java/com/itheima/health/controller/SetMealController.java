@@ -11,6 +11,7 @@ import com.itheima.health.pojo.result.PageResult;
 import com.itheima.health.pojo.result.Result;
 import com.itheima.health.service.SetMealService;
 import com.itheima.health.utils.AliOssUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,13 +27,14 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/setmeal")
 @Slf4j
+@RequiredArgsConstructor
 public class SetMealController {
-    @Autowired
-    private SetMealService setMealService;
-    @Autowired
-    private AliOssUtil aliOssUtil;
-    @Autowired
-    private RedisTemplate redisTemplate ;
+
+    private final SetMealService setMealService;
+
+    private final AliOssUtil aliOssUtil;
+
+    private final RedisTemplate redisTemplate ;
 
     /**
      * 图片上传
@@ -132,6 +134,9 @@ public class SetMealController {
         setmeal.setImg(setmeal.getImg().replace(aliOssUtil.getUrlPrefix(), ""));
         String img = (String)redisTemplate.opsForValue().get(setmeal.getId());
         if (!setmeal.getImg().equals(img)){
+            //存一份到redis中的mysqlimg中
+            redisTemplate.opsForSet().add(RedisConst.MYSQL_PIC,setmeal.getImg());
+            //把redis中的旧图片信息删除
             redisTemplate.opsForSet().remove(RedisConst.MYSQL_PIC,img);
             redisTemplate.delete(setmeal.getId());
         }
